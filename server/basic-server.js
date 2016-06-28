@@ -1,4 +1,6 @@
 /* Import node's http module: */
+var handleRequest = require('./request-handler');
+
 var http = require('http');
 
 
@@ -14,6 +16,10 @@ var port = 3000;
 // special address that always refers to localhost.
 var ip = '127.0.0.1';
 
+// exports.serverStorage = {
+//   '/classes/messages': [],
+//   '/send': []
+// };
 
 
 // We use node's http module to create a server.
@@ -38,4 +44,5 @@ server.listen(port, ip);
 // server.listen() will continue running as long as there is the
 // possibility of serving more requests. To stop your server, hit
 // Ctrl-C on the command line.
+
 
