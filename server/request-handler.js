@@ -23,10 +23,14 @@ module.exports = function(request, response) {
   var headers = defaultCorsHeaders;
   var statusCode;
   headers['Content-Type'] = 'application/json';
+  // console.log(request.url);
+
+  // console.log(method);
   if (request.method === 'POST') {
     var res = [];
 
     request.on('data', function(data) {
+      // console.log(JSON.parse(data));
       res.push(data); 
       console.log(res);
     });
@@ -48,6 +52,9 @@ module.exports = function(request, response) {
         method: method,
         url: url,
         results: res
+        // serverStorage['/classes/messages'].filter(function(obj) {
+        //   return (obj.username === res.username);
+        // })
       };
 
 
@@ -78,17 +85,17 @@ module.exports = function(request, response) {
   // The outgoing status.
     statusCode = 200;
 
-  // See the note below about CORS headers.
-  
+    // See the note below about CORS headers.
+    
 
-  // Tell the client we are sending them plain text.
-  //
-  // You will need to change this if you are sending something
-  // other than plain text, like JSON or HTML.
- 
+    // Tell the client we are sending them plain text.
+    //
+    // You will need to change this if you are sending something
+    // other than plain text, like JSON or HTML.
+   
 
-  // .writeHead() writes to the request line and headers of the response,
-  // which includes the status and all headers.
+    // .writeHead() writes to the request line and headers of the response,
+    // which includes the status and all headers.
     request.on('error', function(err) {
       statusCode = 404;
       console.log(err);
@@ -99,6 +106,7 @@ module.exports = function(request, response) {
     });
 
     request.on('end', function() {
+      //body = Buffer.concat(body).toString();
       var results;
 
       if (url === '/classes/messages') {
@@ -111,6 +119,7 @@ module.exports = function(request, response) {
 
       if (response.on) {
         response.on('error', function(err) {
+        // console.log(err);
         });
       }
 
@@ -127,6 +136,8 @@ module.exports = function(request, response) {
         url: url,
         results: results
       };
+
+      console.log(response.write);
 
       if (response.write) {
         response.write(JSON.stringify(responseBody));
