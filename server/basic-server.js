@@ -1,7 +1,16 @@
 /* Import node's http module: */
-var handleRequest = require('./request-handler');
+var handle = require('./request-handler');
+
+// var handlePost = require('./handlePost');
+// var handleGet = require('./handleGet');
 
 var http = require('http');
+var fs = require('fs');
+var path = require('path');
+var express = require('express');
+var bodyParser = require('body-parser');
+var cors = require('cors');
+var app = express();
 
 
 // Every server needs to listen on a port with a unique number. The
@@ -20,17 +29,27 @@ var ip = '127.0.0.1';
 //   '/classes/messages': [],
 //   '/send': []
 // };
+app.set(port);
 
+app.use(cors());
+app.use(bodyParser.json());
 
+app.get('/', handle.get);
+
+app.get('/classes/messages', handle.get);
+
+app.post('/classes/messages', handle.post);
+
+app.listen(port, ip);
 // We use node's http module to create a server.
 //
 // The function we pass to http.createServer will be used to handle all
 // incoming requests.
 //
 // After creating the server, we will tell it to listen on the given port and IP. */
-var server = http.createServer(handleRequest);
+// var server = http.createServer(handleRequest);
 console.log('Listening on http://' + ip + ':' + port);
-server.listen(port, ip);
+// server.listen(port, ip);
 
 // To start this server, run:
 //
