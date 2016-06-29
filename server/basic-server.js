@@ -1,7 +1,7 @@
 /* Import node's http module: */
 var handle = require('./request-handler');
 
-
+exports.server = function() {
 var http = require('http');
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -29,3 +29,5 @@ app.post('/classes/messages', handle.post);
 app.listen(port, ip);
 
 console.log('Listening on http://' + ip + ':' + port);
+
+}();
