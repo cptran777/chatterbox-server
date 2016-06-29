@@ -4,7 +4,6 @@ var expect = require('chai').expect;
 describe('server', function() {
   it('should respond to GET requests for /log with a 200 status code', function(done) {
     request('http://127.0.0.1:3000/classes/messages', function(error, response, body) {
-      console.log('8===============D', response);
       expect(response.statusCode).to.equal(200);
       done();
     });
@@ -60,8 +59,6 @@ describe('server', function() {
       // Now if we request the log, that message we posted should be there:
       request('http://127.0.0.1:3000/classes/messages', function(error, response, body) {
         var messages = JSON.parse(body).results;
-        console.log('---------------->', messages);
-        // console.log(request.username);
         expect(messages[0].username).to.equal('Jono');
         expect(messages[0].message).to.equal('Do my bidding!');
         done();

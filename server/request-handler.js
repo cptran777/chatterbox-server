@@ -15,49 +15,32 @@ var express = require('express');
 var app = express();
 var fs = require('fs');
 var path = require('path');
+var statusCode;
 
 var serverStorage = {
-  '/classes/messages': [{username: 'joco', text: 'hey', roomname: 'lobby', objectId: 'fack'},
-  {username: 'cojo', text: 'sup yay', roomname: 'lobby', objectId: 'you'}],
+  '/classes/messages': [{username: 'User', text: 'hey', roomname: 'lobby', objectId: 0},
+  {username: 'User', text: 'welcome', roomname: 'lobby', objectId: 1}],
   '/send': []
 };
 
 
 exports.get = function(req, res) {
-  var method = req.method;
-  var body = [];
-  var headers = defaultCorsHeaders;
-  var statusCode;
 
   statusCode = 200;
 
-  // req.on('error', function(err) {
-  //   statusCode = 404;
-  //   console.log(err);
-  // });
-
-  res.set(headers);
-
   var resBody = {
-    method: method,
+    method: req.method,
     url: req.originalUrl,
     results: serverStorage['/classes/messages']
   };
 
-  console.log(req.body);
   res.json(resBody);
   res.end();
 };
 
 exports.post = function(req, res) {
-  var method = req.method;
-  var body = [];
-  var headers = defaultCorsHeaders;
-  var statusCode;
 
   statusCode = 201;
-
-  res.set(headers);
 
   var toAdd = req.body;
   toAdd.objectId = Math.floor(Math.random() * 1000000);
@@ -65,62 +48,16 @@ exports.post = function(req, res) {
   serverStorage['/classes/messages'].push(req.body);
 
   var resBody = {
-    method: method,
+    method: req.method,
     url: req.originalUrl,
     results: serverStorage['/classes/messages']
   };
 
-  console.log(req.body);
   res.json(resBody);
   res.end();
-
 };
 
-                                                                                                                                                                                                                           
-
-  /*
-  if (first parse piece === 'classes') {
-    if (second parse piece === 'messages') {
-      serverStorage['messages'].push(data);
-    }
-  } else {
-  if (first parse piece === 'send') {
-    serverStorage['send'].push(data);
-  }
-  }
-  */
+exports.init = function(req, res) {
 
 
-
-
-  // Make sure to always call res.end() - Node may not send
-  // anything back to the client until you do. The string you pass to
-  // res.end() will be the body of the res - i.e. what shows
-  // up in the browser.
-  //
-  // Calling .end "flushes" the res's internal buffer, forcing
-  // node to actually send all the data over to the client.
-
-  // console.log(req.url);
-  // console.log(method);
-
-
-
-// These headers will allow Cross-Origin Resource Sharing (CORS).
-// This code allows this server to talk to websites that
-// are on different domains, for instance, your chat client.
-//
-// Your chat client is running from a url like file://your/chat/client/index.html,
-// which is considered a different domain.
-//
-// Another way to get around this restriction is to serve you chat
-// client from this domain by setting up static file serving.
-var defaultCorsHeaders = {
-  'access-control-allow-origin': '*',
-  'access-control-allow-methods': 'GET, POST, PUT, DELETE, OPTIONS',
-  'access-control-allow-headers': 'content-type, accept',
-  'access-control-max-age': 10, // Seconds.
-  'Content-Type': 'application/json'
 };
-
-
