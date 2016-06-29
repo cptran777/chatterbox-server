@@ -8,10 +8,7 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 var app = express();
 
-var port = 3000;
-
-var ip = '127.0.0.1';
-
+var port = process.env.PORT || 3000);
 
 app.set(port);
 
@@ -26,7 +23,7 @@ app.get('/classes/messages', handle.get);
 
 app.post('/classes/messages', handle.post);
 
-app.listen(port, ip);
+app.listen(port);
 
 console.log('Listening on http://' + ip + ':' + port);
 
