@@ -58,6 +58,5 @@ exports.post = function(req, res) {
 };
 
 exports.init = function(req, res) {
-
-
+  res.redirect('static/index.html');
 };
