@@ -23,7 +23,7 @@ app.get('/classes/messages', handle.get);
 
 app.post('/classes/messages', handle.post);
 
-app.listen(port);
+app.listen(port, 0.0.0.0);
 
 console.log('Listening on http://' + ip + ':' + port);
 
